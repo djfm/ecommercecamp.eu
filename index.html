@@ -6,6 +6,7 @@
         <title>A look inside the cloud</title>
         <link rel="stylesheet" href="css/reveal.css">
         <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+        <link rel="stylesheet" href="lib/css/zenburn.css">
     </head>
 
     <body>
@@ -94,8 +95,303 @@
                 </section>
 
                 <section>
-                    <h2>Questions ?</h2>
+
+	                	<section>
+                        <h1>Contribute to PrestaShop</h1>
+                    </section>
+
+                    <section>
+	                    	<h1>PrestaShop Core</h1>
+                        <p class="fragment">PrestaShop is Open Source and available on <a href="https://github.com/PrestaShop" target="_blank">GitHub</a></p>
+                        <p class="fragment">30000+ commits</p>
+                        <p class="fragment">250+ contributors</p>
+                        <p class="fragment">Translations on <a href="https://crowdin.com/project/prestashop-official" target="_blank">Crowdin</a></p>
+                    </section>
+
+										<section>
+	                    	<h1>PrestaShop Addons</h1>
+	                    	<p class="fragment">Official marketplace</p>
+	                    	<p class="fragment">5000+ modules & themes</p>
+	                    	<p class="fragment">Community revenue : 10 000 000€</p>
+										</section>
+
+										<section>
+											<img src="img/contrib_graph.png" />
+										</section>
+
                 </section>
+
+								<section>
+
+	                	<section>
+                        <h1>Time to make money!</h1>
+                        <h3>...and learn how to make a PrestaShop module</h3>
+                    </section>
+
+										<section>
+                        <h2>Setting up your environment</h2>
+                        <p>Quick install: MAMP, WAMP...</p>
+                        <p>Debug mode: define('_PS_MODE_DEV_', true);</p>
+                        <a href="http://doc.prestashop.com/display/PS16/Setting+Up+Your+Local+Development+Environment" target="_blank">Documentation</a>
+                    </section>
+
+                    <section>
+	                    	<h2>Quick start</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+class MyModule extends Module
+{
+	public function __construct()
+	{
+	  $this->name = 'mymodule';
+	  $this->tab = 'front_office_features';
+	  $this->version = '1.0.0';
+	  $this->author = 'Firstname Lastname';
+
+	  $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
+	  $this->bootstrap = true;
+
+	  parent::__construct();
+
+	  $this->displayName = $this->l('My module');
+	  $this->description = $this->l('Description of my module.');
+
+	  $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
+
+	  if (!Configuration::get('MYMODULE_NAME'))
+	    $this->warning = $this->l('No name provided');
+	}
+}
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Creating+a+first+module" target="_blank">http://doc.prestashop.com/display/PS16/Creating+a+first+module</a>
+                    </section>
+
+                    <section>
+	                    	<h2>Configuration</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+class MyModule extends Module
+{
+	public function __construct() { ... }
+
+	public function getContent()
+	{
+		$output = 'Hello world';
+
+		// Some awesome code
+
+		return $output;
+	}
+}
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Adding+a+configuration+page" target="_blank">http://doc.prestashop.com/display/PS16/Adding+a+configuration+page</a>
+                    </section>
+
+                    <section>
+	                    	<h2>Install/Uninstall</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+class MyModule extends Module
+{
+	public function __construct() { ... }
+
+	public function install()
+	{
+		return parent::install() && $this->registerHook('leftColumn')
+			&& $this->registerHook('header')
+			&& Configuration::updateValue('MYMODULE_NAME', 'Hoooooo Yeaaaaah!');
+	}
+
+	// public function uninstall() { ... }
+
+	public function hookDisplayHeader()
+	{
+		$this->context->controller->addCSS($this->_path.'css/mymodule.css', 'all');
+	}
+
+	public function hookDisplayLeftColumn($params)
+	{
+		return $this->l('Hello world');
+	}
+}
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Creating+a+first+module" target="_blank">http://doc.prestashop.com/display/PS16/Creating+a+first+module</a>
+                        <a href="http://doc.prestashop.com/display/PS16/Displaying+content+on+the+front-office" target="_blank">http://doc.prestashop.com/display/PS16/Displaying+content+on+the+front-office</a>
+                    </section>
+
+                    <section>
+	                    	<h2>Smarty</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+// PHP
+
+$this->context->smarty->assign(
+    array(
+        'my_module_name' => Configuration::get('MYMODULE_NAME'),
+        'my_module_link' => $this->context->link->getModuleLink('mymodule', 'display')
+    )
+);
+return $this->display(__FILE__, 'mymodule.tpl');
+
+// SMARTY (.tpl)
+
+<a href="{$my_module_link|urlencode}">{$my_module_name|escape:'htmlall':'UTF-8'}</a>
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Displaying+content+on+the+front-office" target="_blank">http://doc.prestashop.com/display/PS16/Displaying+content+on+the+front-office</a><br>
+                        <a href="http://www.smarty.net/docs/en/" target="_blank">http://www.smarty.net/docs/en/</a>
+                    </section>
+
+                    <section>
+	                    	<h2>SQL Requests</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+// Manual
+$sql = 'SELECT COUNT(*) FROM '._DB_PREFIX_.'shop';
+$totalShop = Db::getInstance(_PS_USE_SQL_SLAVE_)->getValue($sql);
+
+// Query builder
+$sql = new DbQuery();
+$sql->select('*');
+$sql->from('cms', 'c');
+$sql->innerJoin('cms_lang', 'l', 'c.id_cms = l.id_cms AND l.id_lang = '.(int)$id_lang);
+$sql->where('c.active = 1');
+$sql->orderBy('position');
+return Db::getInstance()->executeS($sql);
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Accessing+the+database" target="_blank">http://doc.prestashop.com/display/PS16/Accessing+the+database</a>
+                    </section>
+
+                    <section>
+	                    	<h2>Helpers</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+public function displayForm()
+{
+    // Get default language
+    $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+
+    // Init Fields form array
+    $fields = array(
+        'legend' => array(
+            'title' => $this->l('Settings'),
+        ),
+        'input' => array(
+            array(
+                'type' => 'text',
+                'label' => $this->l('Configuration value'),
+                'name' => 'MYMODULE_NAME',
+                'size' => 20,
+                'required' => true
+            )
+        ),
+        'submit' => array(
+            'title' => $this->l('Save'),
+            'class' => 'button'
+        )
+    );
+
+    $helper = new HelperForm();
+
+    // Module, token and currentIndex
+    $helper->module = $this;
+    $helper->name_controller = $this->name;
+    $helper->token = Tools::getAdminTokenLite('AdminModules');
+    $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+
+    // Language
+    $helper->default_form_language = $default_lang;
+    $helper->allow_employee_form_lang = $default_lang;
+
+    // Title and toolbar
+    $helper->title = $this->displayName;
+    $helper->show_toolbar = true;        // false -> remove toolbar
+    $helper->toolbar_scroll = true;      // yes - > Toolbar is always visible on the top of the screen.
+    $helper->submit_action = 'submit'.$this->name;
+    $helper->toolbar_btn = array(
+        'save' =>
+        array(
+            'desc' => $this->l('Save'),
+            'href' => AdminController::$currentIndex.'&configure='.$this->name.'&save'.$this->name.
+            '&token='.Tools::getAdminTokenLite('AdminModules'),
+        ),
+        'back' => array(
+            'href' => AdminController::$currentIndex.'&token='.Tools::getAdminTokenLite('AdminModules'),
+            'desc' => $this->l('Back to list')
+        )
+    );
+
+    // Load current value
+    $helper->fields_value['MYMODULE_NAME'] = Configuration::get('MYMODULE_NAME');
+
+    return $helper->generateForm(array($fields_form));
+}
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Using+the+HelperForm+class" target="_blank">http://doc.prestashop.com/display/PS16/Using+the+HelperForm+class</a>
+                        <a href="http://doc.prestashop.com/display/PS16/Using+the+HelperOptions+class" target="_blank">http://doc.prestashop.com/display/PS16/Using+the+HelperOptions+class</a>
+                        <a href="http://doc.prestashop.com/display/PS16/Using+the+HelperList+class" target="_blank">http://doc.prestashop.com/display/PS16/Using+the+HelperList+class</a>
+                    </section>
+
+                    <section>
+												<h2>Full documentation</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Developer+Guide" target="_blank">http://doc.prestashop.com/display/PS16/Developer+Guide</a><br>
+												<a href="http://www.amazon.de/PrestaShop-Module-Development-Fabien-Serny/dp/1783280255/ref=sr_1_1?ie=UTF8&qid=1426007317&sr=8-1&keywords=PrestaShop+Module+Development" target="_blank">PrestaShop Module Development by Fabien Serny</a>
+                    </section>
+
+								</section>
+
+								<section>
+
+	                	<section>
+                        <h1>Thank you!</h1>
+                        <h2>Questions ?</h2><br>
+                        <h4>@fmdjvncl</h4>
+                        <h4>@scritik</h4>
+                    </section>
+
+								</section>
+
             </div>
         </div>
 
@@ -112,6 +408,9 @@
 				progress: true,
 				history: true,
 				center: true,
+
+				width: 1200,
+				//height: 750,
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
 
