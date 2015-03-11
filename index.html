@@ -374,6 +374,29 @@ public function displayForm()
                     </section>
 
                     <section>
+	                    	<h2>Overrides</h2>
+	                    	<pre class="stretch">
+		                    	<code data-trim class="javascript hljs">
+
+class FrontController extends FrontControllerCore
+{
+	public function initHeader()
+	{
+		// Some awesome code
+		return parent::initHeader();
+	}
+}
+
+	                    		</code>
+	                    	</pre>
+                    </section>
+
+	                	<section>
+                        <h2>More information</h2>
+                        <a href="http://doc.prestashop.com/display/PS16/Overriding+default+behaviors" target="_blank">http://doc.prestashop.com/display/PS16/Overriding+default+behaviors</a>
+                    </section>
+
+                    <section>
 												<h2>Full documentation</h2>
                         <a href="http://doc.prestashop.com/display/PS16/Developer+Guide" target="_blank">http://doc.prestashop.com/display/PS16/Developer+Guide</a><br>
 												<a href="http://www.amazon.de/PrestaShop-Module-Development-Fabien-Serny/dp/1783280255/ref=sr_1_1?ie=UTF8&qid=1426007317&sr=8-1&keywords=PrestaShop+Module+Development" target="_blank">PrestaShop Module Development by Fabien Serny</a>
